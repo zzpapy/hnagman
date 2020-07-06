@@ -4,7 +4,7 @@ import {LetterH, LetterW} from './Letter'
 const words = ["toto","tata","tutu"]
 class Word extends Component{
     state = {
-        word: words[Math.floor(Math.random() * this.words.length())],
+        word: words[Math.floor(Math.random() * words.length())],
         clicked : false
     }
     handleClick = () =>{
