@@ -1,29 +1,63 @@
-import React, {Component} from 'react';
-import logo from './logo.svg';
-import Word  from './components/Word';
+import React, { Component } from 'react'
 import './App.css';
 
-function App(props) {
-  const name =  "greg"
-  const surname = "zzpapy"
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div>
-          {props.prefix} <Word name={name} surname={surname}/>
-        </div>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Word from './components/Word'
+import Player from './components/Player'
+
+class App extends Component{
+  constructor(props){
+    super(props)
+    this.state = {
+       nbPlayers:[],
+       value: ""
+    }
+    this.inputChangedHandler = this.inputChangedHandler.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleSubmit(event) {
+    let players = []
+    event.preventDefault();
+    let playing = false
+    for(let i=1;i <= event.target.nb.value;i++){
+      if(i===1){
+        playing= true
+      }
+      else{
+        playing = false
+      }
+      players.push(
+        <Player className={playing} key={i} nb={i} playing={playing} id={i}/>
+        )
+        console.log(playing);
+      }
+      this.setState({nbPlayers:players})
+  }
+
+  register(e){
+    e.preventDefault()
+    console.log(this)
+  }
+  inputChangedHandler = (e) => {
+    const updatedKeyword = e.target.value;
+    console.log(e.target.value)
+    // May be call for search result
+}
+  render(){
+    return (
+      <main>
+        <Word/>
+        {this.state.nbPlayers}
+        <form onSubmit={this.handleSubmit}>
+          <input 
+          onChange={(e)=>this.inputChangedHandler(e)}
+          type="number" name="nb"
+          />
+          <button type="submit" >valider</button>
+        </form>
+      </main>
+    );
+
+  }
 }
 
 export default App;
